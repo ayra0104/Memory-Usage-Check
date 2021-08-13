@@ -9,17 +9,18 @@
       c) 
       critical=${OPTARG};;
       w) 
-      warning=${OPTARG}
-      if (( $(( warning )) >= $(( critical)) ))
-      then
-      echo "Error: Critical threshold should be greater than warning threshold."
-      exit 1;;
-      fi
+      warning=${OPTARG};;
       e) 
       email=${OPTARG};;  
       esac
    done
    
+   if (( $(( warning )) >= $(( critical)) ))
+   then
+   echo "Error: Critical threshold should be greater than warning threshold."
+   exit 1;;
+   fi
+      
    if [[ $critical = "" || $warning = "" || $email = "" ]]
    then
    echo "No complete argument."
