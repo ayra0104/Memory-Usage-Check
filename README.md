@@ -13,28 +13,29 @@
       if (( $(( warning )) >= $(( critical)) ))
       then
       echo "Error: Critical threshold should be greater than warning threshold."
-      fi
       exit 1;;
+      fi
       e) 
       email=${OPTARG};;  
-      :)
-      echo "Error: -$OPTARG requires an argument"
-      exit 1;;
       esac
    done
+   
+   if [[ $critical = "" || $warning = "" || $email = "" ]]
+   then
+   echo "No complete argument."
+   exit 1
+   fi
    
    ramusage=$(free | awk '/Mem/{printf("Ram Usage: %.0f\n"), $3/$2*100}'|awk '{print $3}')
    
    if (( $ramusage >= $(( critical )) ))
    then
     subj="$(date + "%Y%m%d %HH:%MM") Critical"
-    mail -s "$subj" "$email" < /dev/null
-    echo "2"
+    mail -s "$subj" "$email"
     exit 2
     
     elif (( $ramusage >= $(( warning )) ))
     then
-    echo "1"
     exit 1
     
     else
