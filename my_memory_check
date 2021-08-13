@@ -15,7 +15,7 @@
    if (( $(( warning )) >= $(( critical)) ))
    then
    echo "Error: Critical threshold should be greater than warning threshold."
-   exit 1;;
+   exit 1
    fi
       
    if [[ $critical = "" || $warning = "" || $email = "" ]]
